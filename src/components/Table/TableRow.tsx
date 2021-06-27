@@ -8,7 +8,6 @@ type TablePropsType = {
     dataUrl: string
 }
 
-
 export const TableRow: React.FC<TablePropsType> = React.memo(({dataUrl}): React.ReactElement => {
 
         const [data, setData] = useState<TableType[]>();
@@ -17,7 +16,7 @@ export const TableRow: React.FC<TablePropsType> = React.memo(({dataUrl}): React.
             let dataTable = tableApi.getTable(dataUrl);
             dataTable
                 .then(res => setData(res))
-                .catch(err => console.log(err));
+                .catch(err => console.warn(err));
         }, []);
 
         return <table className={classes.table}>
@@ -33,7 +32,11 @@ export const TableRow: React.FC<TablePropsType> = React.memo(({dataUrl}): React.
             {data && data.map((item, i) => (
                 <tr key={i}>
                     {Object.values(item).map(value => {
-                        return <td key={value}>{value}</td>
+                        if (typeof value === 'string') {
+                            return <td key={value}>{value}</td>
+                        } else {
+                            return <td key={value}>Не строка</td>
+                        }
                     })}
                 </tr>
             ))}
