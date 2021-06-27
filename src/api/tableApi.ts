@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {DataType} from '../components/Table/Table';
+import {TableType} from '../components/Table/TableRow';
 
 export const tableApi = {
-    getTable(url:string){
-        return axios.get<DataType[]>(url)
+    getTable(url: string) {
+        return axios.get<TableType[]>(url)
             .then(response => response.data);
     }
 }
