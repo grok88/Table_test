@@ -1,12 +1,11 @@
 import React, {FormEvent, useEffect, useState} from 'react';
 import './App.css';
-import {DataType, Table} from './components/Table/Table';
+import {Table, TableType} from './components/Table/Table';
 import {tableApi} from './api/tableApi';
 
 function App() {
-    console.log('app')
     const [url, setUrl] = useState<string>('https://trycode.pw/c/29R5W.json');
-    const [response, setData] = useState<DataType[] | null>(null);
+    const [data, setData] = useState<TableType[]>([]);
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -14,9 +13,9 @@ function App() {
 
     useEffect(() => {
         let dataTable = tableApi.getTable(url);
-        dataTable.then(res => setData(res))
+        dataTable
+            .then(res => setData([...data, res]))
             .catch(err => console.log(err));
-
     }, [url]);
 
     const changeVisibleHandler = () => {
@@ -27,6 +26,7 @@ function App() {
         e.preventDefault();
         if (value) {
             setUrl(value);
+            setValue('https://trycode.pw/c/76FXB.json');
             setIsOpen(false);
         } else {
             console.log('Введите URL');
@@ -36,13 +36,15 @@ function App() {
     return (
         <>
             <div className="App">
-                {isOpen ? <form onSubmit={onSubmit}><input type="text" value={value}
-                                                           onChange={e => setValue(e.currentTarget.value)}/>
+                {isOpen ?
+                    <form onSubmit={onSubmit}><label htmlFor="url">Введите Url :</label><input id={'url'} type="text"
+                                                                                               value={value}
+                                                                                               onChange={e => setValue(e.currentTarget.value)}/>
                         {/*<button onClick={addTableUrlHandler}>Добавить</button>*/}
                     </form> :
-                    <button onClick={changeVisibleHandler}>Добавить таблицу</button>}
+                    <button onClick={changeVisibleHandler} className={'button'}>Добавить таблицу</button>}
                 {
-                    response && <Table dataUrl={response}/>
+                    data.map((table, i) => <Table key={i} dataUrl={table}/>)
                 }
             </div>
         </>
