@@ -1,5 +1,9 @@
+.tableWrapper {
+    overflow: auto;
+    border: 1px solid red;
+}
+
 .table {
-    position: relative;
     width: 100%;
     height: 100%;
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
@@ -17,11 +21,13 @@
     text-align: left;
     font-weight: bold;
 }
+
 .table thead {
-    position: sticky;
-    top:0;
-    z-index: 2;
+    /*position: sticky;*/
+    /*top:0;*/
+    /*z-index: 2;*/
 }
+
 .table th {
     background: #56433D;;
     color: white;
@@ -36,7 +42,7 @@
 }
 
 .table td {
-    padding: 70px ;
+    padding: 70px;
     background: #F8E391;
 }
 
